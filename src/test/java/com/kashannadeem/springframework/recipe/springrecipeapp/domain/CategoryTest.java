@@ -1,0 +1,34 @@
+package com.kashannadeem.springframework.recipe.springrecipeapp.domain;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CategoryTest {
+
+    Category category;
+
+    @BeforeEach
+    void setUp() {
+        category = new Category();
+    }
+
+    @Test
+    void getId() {
+        Long idValue = 4l;
+        category.setId(idValue);
+        assertEquals(idValue, category.getId());
+    }
+
+    @Test
+    void getDescription() {
+        String descriptionValue = "Test Description";
+        category.setDescription(descriptionValue);
+        assertEquals(descriptionValue, category.getDescription());
+    }
+
+    @Test
+    void getRecipes() {
+    }
+}
