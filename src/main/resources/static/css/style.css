@@ -1,0 +1,28 @@
+.container-fluid {
+    margin-top: 20px;
+}
+
+.panel-group {
+    margin-bottom: 20px;
+}
+
+.panel-group .card{
+    margin-bottom: 0;
+    border-radius: 4px;
+}
+
+.panel-group .card+.card{
+    margin-top: 5px;
+}
+
+.panel-group .card-header {
+    border-bottom: 0;
+}
+
+.panel-group .card-body {
+    border-bottom: 1px solid #ddd;
+}
+
+.btn {
+    margin-top: 10px;
+}

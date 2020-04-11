@@ -17,36 +17,11 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"
             th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
-    <style>
-        .panel-group {
-          margin-bottom: 20px;
-        }
-
-        .panel-group .card{
-          margin-bottom: 0;
-          border-radius: 4px;
-        }
-
-        .panel-group .card+.card{
-          margin-top: 5px;
-        }
-
-        .panel-group .card-header {
-          border-bottom: 0;
-        }
-
-        .panel-group .card-body {
-          border-bottom: 1px solid #ddd;
-        }
-
-        .btn {
-          margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <!--/*@thymesVar id="recipe" type="com.kashannadeem.springframework.recipe.springrecipeapp.domain.Recipe"*/-->
-<div class="container-fluid" style="margin-top: 20px;">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <form  th:object="${recipe}" th:action="@{/recipe/}" method="post">

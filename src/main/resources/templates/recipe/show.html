@@ -17,44 +17,11 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"
             th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
-    <style>
-        .panel-group {
-          margin-bottom: 20px;
-        }
-        
-        .panel-group .card{
-          margin-bottom: 0;
-          border-radius: 4px;
-        }
-        
-        .panel-group .card+.card{
-          margin-top: 5px;
-        }
-        
-        .panel-group .card-header {
-          border-bottom: 0;
-        }
-        
-        .panel-group .card-body {
-          border-bottom: 1px solid #ddd;
-        }
-
-        .btn {
-          margin-top: 10px;
-        }
-    </style>
-    <script type="text/javascript">
-        const deleteButtons = document.getElementsByClassName('confirmation');
-        var confirmation = function (e) {
-            if (!confirm('Are you sure?')) e.preventDefault();
-        };
-        for (var i = 0, l = deleteButtons.length; i < l; i++) {
-            deleteButtons[i].addEventListener('click', confirmation, false);
-        }
-    </script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="/js/script.js"></script>
 </head>
 <body>
-<div class="container-fluid" style="margin-top: 20px;">
+<div class="container-fluid">
     <!--/*@thymesVar id="recipe" type="com.kashannadeem.springframework.recipe.springrecipeapp.domain.Recipe"*/-->
     <!--/*@thymesVar id="category" type="com.kashannadeem.springframework.recipe.springrecipeapp.domain.Category"*/-->
     <div class="row">
