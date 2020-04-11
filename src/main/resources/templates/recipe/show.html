@@ -43,6 +43,15 @@
           margin-top: 10px;
         }
     </style>
+    <script type="text/javascript">
+        const deleteButtons = document.getElementsByClassName('confirmation');
+        var confirmation = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = deleteButtons.length; i < l; i++) {
+            deleteButtons[i].addEventListener('click', confirmation, false);
+        }
+    </script>
 </head>
 <body>
 <div class="container-fluid" style="margin-top: 20px;">
@@ -54,12 +63,17 @@
                 <div class="card card-primary">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-11 ">
+                            <div class="col-md-10">
                                 <h1 class="card-title" th:text="${recipe.description}">Recipe Description Here!</h1>
                             </div>
                             <div class="col-md-1">
                                 <a class="btn btn-default" href="#" role="button"
                                    th:href="@{'/recipe/' + ${recipe.id} + '/update'}">Edit</a>
+                            </div>
+
+                            <div class="col-md-1">
+                                <a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/delete'}"
+                                   class="btn btn-default delete" onclick="return confirm('Are you sure?')">Delete</a>
                             </div>
                         </div>
                     </div>

@@ -86,4 +86,18 @@ class RecipeServiceImplTest {
         verify(recipeRepository, times(1)).findAll();
         verify(recipeRepository, never()).findById(anyLong());
     }
+
+    @Test
+    void deleteById() {
+        //given
+        Long idToDelete = Long.valueOf(2l);
+
+        //when
+        recipeService.deleteById(idToDelete);
+
+        //no 'when' because method has void return type
+
+        //then
+        verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
 }
