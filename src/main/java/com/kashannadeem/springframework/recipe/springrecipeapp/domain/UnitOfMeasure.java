@@ -1,6 +1,6 @@
 package com.kashannadeem.springframework.recipe.springrecipeapp.domain;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

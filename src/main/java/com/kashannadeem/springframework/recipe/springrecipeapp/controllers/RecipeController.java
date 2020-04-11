@@ -1,12 +1,14 @@
 package com.kashannadeem.springframework.recipe.springrecipeapp.controllers;
 
 import com.kashannadeem.springframework.recipe.springrecipeapp.commands.RecipeCommand;
-import com.kashannadeem.springframework.recipe.springrecipeapp.domain.Recipe;
 import com.kashannadeem.springframework.recipe.springrecipeapp.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
