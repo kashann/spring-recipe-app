@@ -38,17 +38,30 @@
         .panel-group .card-body {
           border-bottom: 1px solid #ddd;
         }
+
+        .btn {
+          margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 <div class="container-fluid" style="margin-top: 20px;">
     <!--/*@thymesVar id="recipe" type="com.kashannadeem.springframework.recipe.springrecipeapp.domain.Recipe"*/-->
+    <!--/*@thymesVar id="category" type="com.kashannadeem.springframework.recipe.springrecipeapp.domain.Category"*/-->
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="panel-group">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h1 class="card-title" th:text="${recipe.description}">Recipe Description Here!</h1>
+                        <div class="row">
+                            <div class="col-md-11 ">
+                                <h1 class="card-title" th:text="${recipe.description}">Recipe Description Here!</h1>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="btn btn-default" href="#" role="button"
+                                   th:href="@{'/recipe/' + ${recipe.id} + '/update'}">Edit</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -103,7 +116,7 @@
                                 <h5>URL:</h5>
                             </div>
                             <div class="col-md-3">
-                                <a th:text="${recipe.url}" th:href="${recipe.url}">http://www.example.com</a>
+                                <p><a href="#" th:href="${recipe.url}">View Original</a></p>
                             </div>
                         </div>
                     </div>

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -25,10 +26,14 @@ class RecipeControllerTest {
 
     RecipeController controller;
 
+    MockMvc mockMvc;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+
         controller = new RecipeController(recipeService);
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
     @Test
@@ -36,11 +41,9 @@ class RecipeControllerTest {
         Recipe recipe = new Recipe();
         recipe.setId(1l);
 
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-
         when(recipeService.findById(anyLong())).thenReturn(recipe);
 
-        mockMvc.perform(get("/recipe/show/1"))
+        mockMvc.perform(get("/recipe/" + recipe.getId() + "/show"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
@@ -48,7 +51,11 @@ class RecipeControllerTest {
 
     @Test
     void newRecipe() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        RecipeCommand command = new RecipeCommand();
+        command.setId(2l);
+
+        when(recipeService.saveRecipeCommand(any())).thenReturn(command);
+
         mockMvc.perform(get("/recipe/new"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/recipeForm"))
@@ -57,19 +64,29 @@ class RecipeControllerTest {
 
     @Test
     void saveOrUpdate() throws Exception {
-        Recipe recipe = new Recipe();
-        recipe.setId(1l);
-        RecipeToRecipeCommand converter = new RecipeToRecipeCommand(new CategoryToCategoryCommand(),
-                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()),
-                new NotesToNotesCommand());
-        RecipeCommand command = converter.convert(recipe);
-
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        RecipeCommand command = new RecipeCommand();
+        command.setId(2l);
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
-        mockMvc.perform(post("/recipe"))
+        mockMvc.perform(post("/recipe")
+                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                    .param("id", "")
+                    .param("description", "some string"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/recipe/show/" + command.getId()));
+                .andExpect(view().name("redirect:/recipe/" + command.getId() + "/show"));
+    }
+
+    @Test
+    public void testGetUpdateView() throws Exception {
+        RecipeCommand command = new RecipeCommand();
+        command.setId(2l);
+
+        when(recipeService.findCommandById(anyLong())).thenReturn(command);
+
+        mockMvc.perform(get("/recipe/" + command.getId() + "/update"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/recipeForm"))
+                .andExpect(model().attributeExists("recipe"));
     }
 }
