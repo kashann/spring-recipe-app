@@ -59,9 +59,6 @@ class RecipeServiceImplTest {
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
 
-//        Recipe recipeReturned = recipeService.findById(1L);
-
-        // should throw exception
         assertThrows(NotFoundException.class, () -> {
             Recipe recipeReturned = recipeService.findById(1L);
         });
