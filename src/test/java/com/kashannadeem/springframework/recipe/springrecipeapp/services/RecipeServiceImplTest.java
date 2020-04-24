@@ -4,7 +4,9 @@ import com.kashannadeem.springframework.recipe.springrecipeapp.commands.RecipeCo
 import com.kashannadeem.springframework.recipe.springrecipeapp.converters.RecipeCommandToRecipe;
 import com.kashannadeem.springframework.recipe.springrecipeapp.converters.RecipeToRecipeCommand;
 import com.kashannadeem.springframework.recipe.springrecipeapp.domain.Recipe;
+import com.kashannadeem.springframework.recipe.springrecipeapp.exceptions.NotFoundException;
 import com.kashannadeem.springframework.recipe.springrecipeapp.repositories.RecipeRepository;
+import org.aspectj.weaver.ast.Not;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,8 +16,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class RecipeServiceImplTest {
@@ -40,16 +41,30 @@ class RecipeServiceImplTest {
     @Test
     void getRecipesById() {
         Recipe recipe = new Recipe();
-        recipe.setId(1l);
+        recipe.setId(1L);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
 
-        Recipe recipeReturned = recipeService.findById(1l);
+        Recipe recipeReturned = recipeService.findById(1L);
 
         assertNotNull(recipeReturned, "Null recipe returned");
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
+    }
+
+    @Test
+    void getRecipesByIdNotFound() throws Exception {
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+//        Recipe recipeReturned = recipeService.findById(1L);
+
+        // should throw exception
+        assertThrows(NotFoundException.class, () -> {
+            Recipe recipeReturned = recipeService.findById(1L);
+        });
     }
 
     @Test

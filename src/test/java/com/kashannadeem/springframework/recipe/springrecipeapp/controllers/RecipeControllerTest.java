@@ -3,6 +3,7 @@ package com.kashannadeem.springframework.recipe.springrecipeapp.controllers;
 import com.kashannadeem.springframework.recipe.springrecipeapp.commands.RecipeCommand;
 import com.kashannadeem.springframework.recipe.springrecipeapp.converters.*;
 import com.kashannadeem.springframework.recipe.springrecipeapp.domain.Recipe;
+import com.kashannadeem.springframework.recipe.springrecipeapp.exceptions.NotFoundException;
 import com.kashannadeem.springframework.recipe.springrecipeapp.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class RecipeControllerTest {
     @Test
     void showById() throws Exception {
         Recipe recipe = new Recipe();
-        recipe.setId(1l);
+        recipe.setId(1L);
 
         when(recipeService.findById(anyLong())).thenReturn(recipe);
 
@@ -47,6 +48,17 @@ class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
+    void getRecipeNotFound() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/" + recipe.getId() + "/show"))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -92,7 +104,7 @@ class RecipeControllerTest {
 
     @Test
     void delete() throws Exception {
-        Long idToDelete = 1l;
+        Long idToDelete = 1L;
         mockMvc.perform(get("/recipe/" + idToDelete + "/delete"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
