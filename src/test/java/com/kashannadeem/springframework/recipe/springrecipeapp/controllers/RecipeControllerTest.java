@@ -63,9 +63,16 @@ class RecipeControllerTest {
     }
 
     @Test
+    void testGetRecipeNumberFormatException() throws Exception {
+        mockMvc.perform(get("/recipe/asdf/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
+    }
+
+    @Test
     void newRecipe() throws Exception {
         RecipeCommand command = new RecipeCommand();
-        command.setId(2l);
+        command.setId(2L);
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
@@ -78,7 +85,7 @@ class RecipeControllerTest {
     @Test
     void saveOrUpdate() throws Exception {
         RecipeCommand command = new RecipeCommand();
-        command.setId(2l);
+        command.setId(2L);
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
@@ -93,7 +100,7 @@ class RecipeControllerTest {
     @Test
     void testGetUpdateView() throws Exception {
         RecipeCommand command = new RecipeCommand();
-        command.setId(2l);
+        command.setId(2L);
 
         when(recipeService.findCommandById(anyLong())).thenReturn(command);
 
