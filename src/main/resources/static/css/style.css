@@ -26,3 +26,15 @@
 .btn {
     margin-top: 10px;
 }
+
+.form-text {
+    color: #737373
+}
+
+.is-valid .form-text {
+    color: #3c763d
+}
+
+.is-invalid .form-text {
+    color: #a94442
+}
